@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BidNest is a student demo online auction interface with sample products, countdown timers, search, and simulated bidding."><meta name="theme-color" content="#111827"><title>BidNest | Online Auction Platform</title>
+<style>
+:root{--navy:#111827;--purple:#702cf4;--lav:#f3edff;--ink:#202338;--muted:#687087;--white:#fff;--line:#e7e8ef;--green:#15803d}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f7f7fb;color:var(--ink)}
+header{background:var(--navy);color:white;padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:800;letter-spacing:.3px}.logo span{color:#b99aff}
+nav a{color:#e9e7f5;text-decoration:none;margin-left:18px;font-size:14px}
+.hero{padding:48px 5% 38px;background:linear-gradient(120deg,#17172b,#34205d);color:white}
+.pill{display:inline-block;background:#ffffff18;border:1px solid #ffffff30;border-radius:99px;padding:7px 12px;font-size:12px}
+.hero h1{font-size:clamp(30px,5vw,48px);max-width:700px;margin:18px 0 12px;line-height:1.12}
+.hero p{color:#ded9ee;max-width:620px;line-height:1.6}
+.search-wrap{display:flex;max-width:620px;margin-top:24px;gap:8px}
+input,button{font:inherit;border-radius:10px;border:0;padding:13px}
+.search-wrap input{flex:1;min-width:0}
+button{cursor:pointer;font-weight:700}.primary{background:var(--purple);color:white}.secondary{background:white;color:#31204f;border:1px solid var(--line)}
+main{padding:30px 5% 48px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.section-head h2{margin:0 0 6px}.muted{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:22px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 7px 24px #1b17400a}
+.product-art{height:155px;background:#202331;display:flex;align-items:center;justify-content:center;font-size:66px}
+.card-content{padding:17px}.card h3{margin:0 0 12px;font-size:18px}
+.bidrow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:12px 0}
+.price{font-size:20px;color:var(--purple);font-weight:800}.timer{font-size:13px;color:#656b7c;margin:12px 0}
+.bidform{display:flex;gap:7px}.bidform input{width:52%;min-width:0;background:#f3f4f8;border:1px solid var(--line);padding:11px}
+.bidform button{flex:1;padding:11px 8px}.message{font-size:12px;min-height:16px;color:var(--green);margin-top:8px}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;margin-top:30px}
+.info article{padding:20px;border-radius:15px;background:var(--lav)}.info h3{margin:0 0 8px}
+footer{padding:24px 5%;background:var(--navy);color:#d8d5e4;font-size:13px;line-height:1.6}
+@media(max-width:560px){nav{width:100%;display:flex;gap:15px;flex-wrap:wrap}nav a{margin:0}.hero{padding-top:35px}.bidform{flex-wrap:wrap}.bidform input{width:100%}.bidform button{width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Bid<span>Nest</span></div>
+  <nav><a href="#auctions">Auctions</a><a href="#how">How it works</a><a href="#about">About</a></nav>
+</header>
+<section class="hero">
+  <span class="pill">DEMO ONLINE AUCTION MARKETPLACE</span>
+  <h1>Discover something great. Make your bid.</h1>
+  <p>Explore interesting finds and try the excitement of bidding in one simple place. This student project uses sample products and simulated bids.</p>
+  <div class="search-wrap"><input id="search" type="search" placeholder="Search products..." aria-label="Search products"><button class="primary" onclick="filterItems()">Search</button></div>
+</section>
+<main>
+  <section id="auctions">
+    <div class="section-head"><div><h2>Featured Auctions</h2><div class="muted">Place a demo bid on an item you like.</div></div><span class="pill" style="background:#eee6ff;color:#5822c6;border-color:#e5d9ff">5 sample listings</span></div>
+    <div class="grid">
+      <article class="card" data-name="wireless headphones headphones audio"><div class="product-art">🎧</div><div class="card-content"><h3>Wireless Headphones</h3><div class="muted">Audio • Good condition</div><div class="bidrow"><span class="muted">Current bid</span><span class="price" id="price-0">₹1,500</span></div><div class="timer">⏳ Ends in <span class="timer-value" data-seconds="3599">59:59</span></div><div class="bidform"><input id="bid-0" type="number" min="1501" placeholder="Your bid ₹"><button class="primary" onclick="placeBid(0)">Place Bid</button></div><div class="message" id="msg-0"></div></div></article>
+      <article class="card" data-name="classic wrist watch watch accessories"><div class="product-art">⌚</div><div class="card-content"><h3>Classic Wrist Watch</h3><div class="muted">Accessories • Lightly used</div><div class="bidrow"><span class="muted">Current bid</span><span class="price" id="price-1">₹2,000</span></div><div class="timer">⏳ Ends in <span class="timer-value" data-seconds="2875">47:55</span></div><div class="bidform"><input id="bid-1" type="number" min="2001" placeholder="Your bid ₹"><button class="primary" onclick="placeBid(1)">Place Bid</button></div><div class="message" id="msg-1"></div></div></article>
+      <article class="card" data-name="digital camera camera photography"><div class="product-art">📷</div><div class="card-content"><h3>Digital Camera</h3><div class="muted">Photography • Demo listing</div><div class="bidrow"><span class="muted">Current bid</span><span class="price" id="price-2">₹5,000</span></div><div class="timer">⏳ Ends in <span class="timer-value" data-seconds="4250">1:10:50</span></div><div class="bidform"><input id="bid-2" type="number" min="5001" placeholder="Your bid ₹"><button class="primary" onclick="placeBid(2)">Place Bid</button></div><div class="message" id="msg-2"></div></div></article>
+      <article class="card" data-name="modern art painting art decor"><div class="product-art">🎨</div><div class="card-content"><h3>Modern Art Canvas</h3><div class="muted">Art & décor • Sample item</div><div class="bidrow"><span class="muted">Current bid</span><span class="price" id="price-3">₹800</span></div><div class="timer">⏳ Ends in <span class="timer-value" data-seconds="1920">32:00</span></div><div class="bidform"><input id="bid-3" type="number" min="801" placeholder="Your bid ₹"><button class="primary" onclick="placeBid(3)">Place Bid</button></div><div class="message" id="msg-3"></div></div></article>
+      <article class="card" data-name="smartphone mobile phone electronics"><div class="product-art">📱</div><div class="card-content"><h3>Smartphone</h3><div class="muted">Electronics • Sample item</div><div class="bidrow"><span class="muted">Current bid</span><span class="price" id="price-4">₹7,500</span></div><div class="timer">⏳ Ends in <span class="timer-value" data-seconds="3100">51:40</span></div><div class="bidform"><input id="bid-4" type="number" min="7501" placeholder="Your bid ₹"><button class="primary" onclick="placeBid(4)">Place Bid</button></div><div class="message" id="msg-4"></div></div></article>
+    </div>
+  </section>
+  <section id="how" class="info"><article><h3>🔎 1. Explore</h3><p>Browse the sample listings and search for a product.</p></article><article><h3>💜 2. Place a bid</h3><p>Enter an amount greater than the current bid and try the demo bidding feature.</p></article><article><h3>⏱️ 3. Watch the timer</h3><p>Countdowns demonstrate how an auction deadline can be shown.</p></article></section>
+  <section id="about" style="margin-top:32px"><h2>About BidNest</h2><p class="muted" style="line-height:1.7;max-width:760px">BidNest is a front-end student project demonstrating an online auction interface. It includes responsive design, sample product cards, search filtering, countdown timers, and simulated bidding feedback. It does not collect payments or place real bids.</p></section>
+</main>
+<footer>© 2026 BidNest — Student demonstration project. All product names, prices, timers, and bids are samples. No real transactions take place.</footer>
+<script>
+function rupees(n){return '₹'+Number(n).toLocaleString('en-IN')}
+function placeBid(i){const input=document.getElementById('bid-'+i);const msg=document.getElementById('msg-'+i);const priceEl=document.getElementById('price-'+i);if(!input||!msg||!priceEl)return;const raw=input.value.trim();const amount=Number(raw);const current=Number(priceEl.textContent.replace(/[^0-9]/g,''));if(raw===''||!Number.isFinite(amount)||amount<=current){msg.style.color='#b42318';msg.textContent='Enter a bid higher than '+rupees(current)+'.';return}priceEl.textContent=rupees(amount);input.value='';input.min=String(amount+1);msg.style.color='#15803d';msg.textContent='Demo bid placed successfully! Current bid updated to '+rupees(amount)+'.';}
+function filterItems(){const q=document.getElementById('search').value.toLowerCase().trim();document.querySelectorAll('.card').forEach(c=>c.style.display=c.dataset.name.includes(q)?'block':'none')}
+document.getElementById('search').addEventListener('input',filterItems);
+// Countdown timers start when the demo page loads. A hosted page (e.g. GitHub Pages)
+// runs this JavaScript normally; some file-preview apps disable JavaScript.
+function formatRemaining(total){const s=Math.max(0,Math.floor(total));const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;return h>0?`${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`:`${m}:${String(sec).padStart(2,'0')}`}
+const timerNodes=[...document.querySelectorAll('.timer-value')].map(t=>({node:t,deadline:Date.now()+Math.max(0,Number(t.dataset.seconds)||0)*1000}));
+function updateTimers(){timerNodes.forEach(({node,deadline})=>{const left=Math.ceil((deadline-Date.now())/1000);node.textContent=left>0?formatRemaining(left):'Ended';});}
+updateTimers();setInterval(updateTimers,250);
+</script>
+</body></html>
